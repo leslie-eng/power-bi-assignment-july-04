@@ -1,64 +1,243 @@
-Power Bi Assignment July 04 2026 Dashboard The Power Bi dashboard is
-divided into several parts. The top section covers the title, the
-dashboard reset button and the Branch dropdown that allows for
-filtering. The section highlighted in blue contains the KPIs that
-breakdown the performance of LuxCars Logistics. The dashboard has 4
-charts: the barchart with most sales, the car brand that was most sold
-and the customer type that brought the most revenue. A trend chart shows
-the revenue, units sold and gross profit. A silder was added that allows
-the user to filter based on the date and the whole dashboard will
-update. A table with the sales rep and the cumulative revenue generated
-from each lead source is present. Below it, we have a matrix with the
-branch star rating, branch name, total revenue per branch, and car units
-sold. A second drill through page is added for the branches, and it has
-the following: the total revenue, the gross profit, the top car by
-revenue, the sales person with most revenue, the lead source, the
-payment status, the revenue each month and delivery status. Once done,
-you can ctrl + click the back button in the left hand side. Measures Avg
-Branch star rating = AVERAGE('Jcars Flat Table (2)'[Customer Rating])
-Avg delivery days = AVERAGE('Jcars Flat Table (2)'[Days to Deliver])
-Gross Profit Margin = (([total revenue] - [COGS])/ [total
-revenue]) * 100 Lead Source Highest Customers = TOPN(     1,    
-VALUES('Jcars Flat Table (2)'[Lead Source]),    
-CALCULATE(COUNT(Customer_dim[Customer Name])) ) No of orders =
-COUNT('Jcars Flat Table (2)'[Order ID]) Sales Highest Rev & Highest
-units = TOPN(     1,     VALUES(Sales_dim[Sales Rep]),    
-CALCULATE(SUM('Jcars Flat Table (2)'[Revenue Recorded])), DESC,    
-CALCULATE(SUM('Jcars Flat Table (2)'[Units Sold])),DESC ) total
-delivery cost = SUM('Jcars Flat Table (2)'[Delivery Fee]) total
-logistics cost = SUM('Jcars Flat Table (2)'[Logistics Cost]) total no
-of cars sold = COUNT(Car_dim[Car_id]) total revenue = SUM('Jcars Flat
-Table (2)'[Revenue Recorded]) Vehicle Type High Revenue & Units sold =
-TOPN(     1,     VALUES(Car_dim[Vehicle Type]),    
-CALCULATE(SUM('Jcars Flat Table (2)'[Revenue Recorded])), DESC,    
-CALCULATE(SUM('Jcars Flat Table (2)'[Units Sold])),DESC )
-Branch With Highest Revenue = TOPN(     1,    
-VALUES(location_dim[Branch]),     CALCULATE(SUM('Jcars Flat Table
-(2)'[Revenue Recorded]))
-)
-Gross Profit = [total revenue] - SUM('Jcars Flat Table (2)'[Total
-units sold]) - SUM('Jcars Flat Table (2)'[Delivery Fee]) - SUM('Jcars
-Flat Table (2)'[Logistics Cost]) Highest Make Sold = TOPN(     1,    
-VALUES(Car_dim[Car Model]),     CALCULATE(SUM('Jcars Flat Table
-(2)'[Units Sold])) )
-payment method Highest total revenue = TOPN(     1,     VALUES('Jcars
-Flat Table (2)'[Payment Method]),     CALCULATE(SUM('Jcars Flat Table
-(2)'[Revenue Recorded])) )
-Region Highest Rev = TOPN(     1,     VALUES(location_dim[Region]),  
-  CALCULATE(SUM('Jcars Flat Table (2)'[Revenue Recorded])) )
-Top Car Make by Revenue = TOPN(     1,     VALUES(Car_dim[Car Make]),
-    CALCULATE(SUM('Jcars Flat Table (2)'[Revenue Recorded])) )
-Insights Nakuru Branch had the highest logistics cost compared to sales
-revenue. SUV's are the most sold vehicles. Toyotas are the top selling
-cars. The revenue has been reducing as the year has been progressing.
-Car dealers and the Government are the highest car purchasers. Kakamega
-branch had the highest revenue. Mpesa was the payment method that
-contributed to the most revenue Delivered is the delivery status with
-the highest orders. Nissan specifically pickups are the most returned.
-Faith Achieng generated the most sales revenue
-Recommendations To increase profit margins, the unit selling price
-should be increase to at least break even. The delivery fee and
-logistics costs are too high thus finding a more efficient method for
-transporting and delivering cars would increase profit margins. More
-advertisements should be done in Instagram, Facebook, and other social
-media spaces since they have brought in a significant amount of revenue.
+# Power BI Sales Dashboard
+
+A complete Power BI project demonstrating the end-to-end analytics workflow—from preparing a raw dataset to building an interactive business dashboard for **LuxCars Logistics**.
+
+---
+
+# Project Overview
+
+This project analyzes vehicle sales and logistics data using Power BI. The objective is to transform a raw CSV dataset into an interactive dashboard that enables business users to monitor sales performance, profitability, logistics, customer behavior, and branch performance.
+
+The project follows a standard business intelligence workflow:
+
+1. Import the raw dataset.
+2. Clean and transform the data.
+3. Design a star schema.
+4. Create DAX measures.
+5. Build interactive dashboard visuals.
+6. Generate business insights and recommendations.
+
+---
+
+# Dataset
+
+**Dataset:** `Jcars_logistics_dataset_v2.csv`
+
+The dataset contains information about:
+
+* Vehicle sales
+* Customers
+* Sales representatives
+* Branches and regions
+* Delivery information
+* Vehicle details
+* Revenue
+* Logistics costs
+* Customer ratings
+* Payment methods
+
+---
+
+# Step 1 – Data Cleaning (Power Query)
+
+The raw dataset was cleaned before analysis.
+
+Typical transformations included:
+
+* Removing duplicate records
+* Handling missing values
+* Correcting data types
+* Standardizing column names
+* Formatting dates
+* Creating calculated columns where necessary
+* Removing unnecessary columns
+* Validating numerical values
+
+After cleaning, the dataset was ready for modelling.
+
+---
+
+# Step 2 – Data Modelling
+
+The dataset was transformed into a **star schema**.
+
+Dimension tables include:
+
+* Customer Dimension
+* Car Dimension
+* Sales Representative Dimension
+* Location Dimension
+
+The fact table stores transactional sales data including:
+
+* Revenue
+* Units sold
+* Delivery fee
+* Logistics cost
+* Customer ratings
+* Days to deliver
+* Payment information
+
+Relationships were created between the fact table and each dimension using their respective primary keys.
+
+This model improves:
+
+* Query performance
+* Report readability
+* DAX efficiency
+* Scalability
+
+---
+
+# Step 3 – DAX Measures
+
+Several measures were created to support business reporting.
+
+Examples include:
+
+* Total Revenue
+* Gross Profit
+* Gross Profit Margin
+* Total Cars Sold
+* Number of Orders
+* Average Delivery Days
+* Average Branch Rating
+* Top Car Make
+* Highest Revenue Branch
+* Highest Revenue Sales Representative
+* Highest Revenue Vehicle Type
+* Highest Revenue Region
+* Highest Revenue Payment Method
+* Highest Customer Lead Source
+
+These measures allow the dashboard to dynamically respond to filters and user interactions.
+
+---
+
+# Step 4 – Dashboard Design
+
+The dashboard provides an executive overview of business performance.
+
+## Dashboard Components
+
+### KPI Cards
+
+Key performance indicators include:
+
+* Total Revenue
+* Gross Profit
+* Total Cars Sold
+* Average Delivery Days
+* Average Branch Rating
+
+### Interactive Filters
+
+Users can filter the dashboard by:
+
+* Branch
+* Date
+
+All visuals update automatically based on the selected filters.
+
+### Charts
+
+The dashboard includes visualizations for:
+
+* Sales performance
+* Best-selling vehicle brands
+* Customer types generating the highest revenue
+* Monthly Revenue Trend
+* Monthly Units Sold
+* Monthly Gross Profit
+
+### Tables
+
+A table displays:
+
+* Sales Representative
+* Lead Source
+* Cumulative Revenue
+
+### Matrix
+
+A matrix summarizes:
+
+* Branch Name
+* Branch Rating
+* Total Revenue
+* Units Sold
+
+### Drill-through Page
+
+A dedicated branch details page provides:
+
+* Total Revenue
+* Gross Profit
+* Top Vehicle by Revenue
+* Highest Performing Sales Representative
+* Lead Source
+* Payment Status
+* Monthly Revenue Trend
+* Delivery Status
+
+---
+
+# Business Insights
+
+Analysis of the dashboard revealed the following:
+
+* Nakuru branch recorded the highest logistics cost relative to revenue.
+* SUVs were the best-selling vehicle category.
+* Toyota was the top-selling vehicle brand.
+* Revenue showed a downward trend throughout the year.
+* Government institutions and car dealers generated the highest customer revenue.
+* Kakamega branch generated the highest overall revenue.
+* M-Pesa contributed the highest payment revenue.
+* Delivered orders represented the largest delivery status category.
+* Nissan pickups experienced the highest number of returns.
+* Faith Achieng generated the highest sales revenue among sales representatives.
+
+---
+
+# Business Recommendations
+
+Based on the analysis:
+
+* Review pricing strategies to improve profit margins.
+* Reduce logistics and delivery expenses by optimizing transportation operations.
+* Increase investment in high-performing marketing channels such as Instagram and Facebook.
+* Investigate the causes of declining monthly revenue.
+* Review the return process for Nissan pickups to identify quality or operational issues.
+* Replicate successful practices from the Kakamega branch across other branches.
+* Continue promoting digital payment methods due to their strong revenue contribution.
+
+---
+
+# Skills Demonstrated
+
+* Power Query
+* Data Cleaning
+* Data Transformation
+* Data Modelling
+* Star Schema Design
+* Relationship Management
+* DAX
+* Data Visualization
+* Business Intelligence
+* Dashboard Design
+* Business Analytics
+
+---
+
+# Tools Used
+
+* Microsoft Power BI
+* Power Query
+* DAX (Data Analysis Expressions)
+* CSV Dataset
+
+---
+
+# Conclusion
+
+This project demonstrates a complete Power BI analytics workflow, beginning with a raw dataset and progressing through data cleaning, modelling, relationship creation, DAX development, and dashboard design. The resulting dashboard provides actionable business insights that support decision-making in sales, logistics, and operational performance.
